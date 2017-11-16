@@ -33,6 +33,9 @@
     <Compile Include="data\database.js" />
     <Compile Include="data\index.js" />
     <Compile Include="data\seedData.js" />
+    <Compile Include="data\setupMongoDbjs.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="gruntfile.js">
       <SubType>Code</SubType>
     </Compile>
