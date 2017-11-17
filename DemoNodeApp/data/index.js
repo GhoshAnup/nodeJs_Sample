@@ -3,12 +3,12 @@
     var seedData = require("./seedData");
     var database = require("./database");
 
-     //seeding data from local seeddata.js file
+     /*seeding data from local seeddata.js file*/
     //  data.getNoteCategories = function (next) {
     //    next(null, seedData.initialNotes);
     //  };
 
-    // seeding data from mongo db 
+    /* seeding data from mongo db*/
     data.getNoteCategories = function (next) {
         database.getDb(function (err, db) {
             if (err) {
@@ -19,6 +19,58 @@
                         next(err, null);
                     } else {
                         next(null, results);
+                    }
+                });
+            }
+        });
+    };
+
+    data.getNotes = function (categoryName, next) {
+        database.getDb(function (err, db) {
+            if (err) {
+                next(err);
+            } else {
+                db.notes.findOne({ name: categoryName }, next);
+            }
+        });
+    };
+
+    data.addNote = function (categoryName, noteToInsert, next) {
+        database.getDb(function (err, db) {
+            if (err) {
+                next(err);
+            } else {
+                db.notes.update({ name: categoryName }, { $push: { notes: noteToInsert } }, next);
+            }
+        });
+    };
+
+    data.createNewCategory = function (categoryName, next) {
+        database.getDb(function (err, db) {
+            if (err) {
+                next(err);
+            } else {
+                db.notes.find({ name: categoryName }).count(function (err, count) {
+
+                    if (err) {
+                        next(err);
+                    } else {
+
+                        if (count != 0) {
+                            next("Category already exists");
+                        } else {
+                            var cat = {
+                                name: categoryName,
+                                notes: []
+                            };
+                            db.notes.insert(cat, function (err) {
+                                if (err) {
+                                    next(err);
+                                } else {
+                                    next(null);
+                                }
+                            });
+                        }
                     }
                 });
             }
