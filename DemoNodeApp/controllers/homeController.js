@@ -1,6 +1,7 @@
 ﻿(function (homeController) {
 
   var data = require("../data");
+  var auth = require("../auth");
 
   homeController.init = function (app) {
 
@@ -12,15 +13,18 @@
                   title: "Using Express server with Vash view engine",
                   error: err,
                   categories: results,
-                  newCatError: req.flash("newCatName")          
+                  newCatError: req.flash("newCatName"),
+                  user: req.user          
               });
           });
       });
 
-      // for angular call
-      app.get("/notes/:categoryName", function (req, res) {
+      // for angular call with passport auth
+      app.get("/notes/:categoryName",
+          auth.ensureAuthenticated,
+          function (req, res) {
           var categoryName = req.params.categoryName;
-          res.render("notes", { title: categoryName });
+          res.render("notes", { title: categoryName, user: req.user });
       });
 
       app.post("/newCategory", function (req, res) {

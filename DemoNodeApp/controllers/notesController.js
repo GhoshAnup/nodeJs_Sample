@@ -2,10 +2,13 @@
 (function (notesController) {
 
     var data = require("../data");
+    var auth = require("../auth");
 
     notesController.init = function (app) {
 
-        app.get("/api/notes/:categoryName", function (req, res) {
+        app.get("/api/notes/:categoryName",
+            auth.ensureApiAuthenticated,
+            function (req, res) {
 
             var categoryName = req.params.categoryName;
 
@@ -19,7 +22,9 @@
             });
         });
 
-        app.post("/api/notes/:categoryName", function (req, res) {
+        app.post("/api/notes/:categoryName",
+            auth.ensureApiAuthenticated,
+            function (req, res) {
 
             var categoryName = req.params.categoryName;
 
