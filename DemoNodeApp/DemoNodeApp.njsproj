@@ -28,6 +28,8 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="auth\hasher.js" />
+    <Compile Include="auth\index.js" />
     <Compile Include="controllers\homeController.js" />
     <Compile Include="controllers\index.js" />
     <Compile Include="controllers\notesController.js">
@@ -42,10 +44,15 @@
     <Compile Include="gruntfile.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="public\js\notesView.js" />
     <Compile Include="server.js" />
     <Content Include=".bowerrc" />
     <Content Include="package.json" />
     <Content Include="public\css\site.css" />
+    <Content Include="public\images\note-blue.png" />
+    <Content Include="public\images\note-green.png" />
+    <Content Include="public\images\note-orange.png" />
+    <Content Include="public\images\note-yellow.png" />
     <Content Include="README.md" />
     <Content Include="views\ejs\index.ejs" />
     <Content Include="views\ejs\layout.ejs" />
@@ -57,12 +64,17 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="views\layout.vash" />
+    <Content Include="views\notes.vash" />
+    <Content Include="views\register.vash" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="auth\" />
     <Folder Include="controllers\" />
     <Folder Include="data\" />
     <Folder Include="public\" />
     <Folder Include="public\css\" />
+    <Folder Include="public\images\" />
+    <Folder Include="public\js\" />
     <Folder Include="views\" />
     <Folder Include="views\jade\" />
     <Folder Include="views\ejs\" />

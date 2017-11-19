@@ -9,12 +9,18 @@
           // res.render("ejs/index", { title: "Express + Ejs view engine" })
           data.getNoteCategories(function (err, results) {
               res.render("index", {
-                  title: "Express with Vash",
+                  title: "Using Express server with Vash view engine",
                   error: err,
-                  categories: results
-                  //newCatError: req.flash("newCatName")           /*-- not able to install connect-flash from NPM, hence commented the code. */
+                  categories: results,
+                  newCatError: req.flash("newCatName")          
               });
           });
+      });
+
+      // for angular call
+      app.get("/notes/:categoryName", function (req, res) {
+          var categoryName = req.params.categoryName;
+          res.render("notes", { title: categoryName });
       });
 
       app.post("/newCategory", function (req, res) {
@@ -23,7 +29,7 @@
               if (err) {
                   // Handle Error
                   console.log(err);
-                 // req.flash("newCatName", err);                 /*   -- not able to install connect-flash from NPM, hence commented the code. */
+                  req.flash("newCatName", err);                 
                   res.redirect("/");
               } else {
                   res.redirect("/notes/" + categoryName);
