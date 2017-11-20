@@ -23,6 +23,20 @@
             alert(err);
           });
 
+
+        var socket = io.connect();
+        socket.on("showThis", function (msg) {
+          alert(msg);
+        });
+
+        socket.emit("join category", categoryName);
+
+        socket.on("broadcast note", function (note) {
+            $scope.notes.push(note);
+            $scope.$apply();
+        });
+
+
         $scope.save = function () {
 
           $http.post(notesUrl, $scope.newNote)
@@ -30,6 +44,7 @@
               // success
               $scope.notes.push(result.data);
               $scope.newNote = createBlankNote();
+              socket.emit("newNote", { category: categoryName, note: result.data });
             }, function (err) {
               // failure
               // TODO
